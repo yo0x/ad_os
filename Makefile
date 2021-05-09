@@ -1,4 +1,4 @@
-MODULE = simple_module
+MODULE = char_dev_ioctl
 obj-m += ${MODULE}.o
 KDIR := /lib/modules/$(shell uname -r)/build
 all:

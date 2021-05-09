@@ -4,6 +4,7 @@
 #include <linux/uaccess.h>
 #include <linux/cdev.h>
 #include <linux/fs.h>
+#include "ioctl_user.h"
 
 int major_num = 0;
 int minor_num = 0;
@@ -20,16 +21,17 @@ module_param(minor_num, int, 0);
 char kernel_char_array[MY_CHAR_DEV_SIZE] = {0};
 void char_dev_exit(void);
 
-int char_open(struct inode *inode, struct file *filp)
+static int char_open(struct inode *inode, struct file *filp)
 {
-    printk(KERN_NOTICE "char_release() release function was called\n") return 0;
+    printk(KERN_NOTICE "char_release() release function was called\n");
+    return 0;
     /* data */
 }
 
-int char_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+static ssize_t char_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-    printk(KERN_NOTICE "char_read() release function was called\n")
-        kernel_char_array[1] = kernel_char_array[1] + 2;
+    printk(KERN_NOTICE "char_read() release function was called\n");
+    kernel_char_array[1] = kernel_char_array[1] + 2;
     kernel_char_array[2] = kernel_char_array[2] + 3;
     printk(KERN_NOTICE "char_read() read function was called\n");
     if (copy_to_user(buf, kernel_char_array, count))
@@ -40,11 +42,11 @@ int char_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
     /* data */
 }
 
-int char_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
+static ssize_t char_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
 {
-    printk(KERN_NOTICE "char_write() release function was called\n")
+    printk(KERN_NOTICE "char_write() release function was called\n");
 
-        if (copy_from_user(kernel_char_array, buf, count))
+    if (copy_from_user(kernel_char_array, buf, count))
     {
         count = -EFAULT;
     }
@@ -93,7 +95,6 @@ struct file_operations char_fops = {
     .read = char_read,
     .write = char_write,
     .open = char_open,
-    .release = char_release,
     .unlocked_ioctl = my_unlocked_ioctl,
 };
 

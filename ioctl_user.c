@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* EXIT_FALIURE/SUCCESS */
 #include <unistd.h>
-#include <sys/ioctl.h>>
+#include <sys/ioctl.h>
 #include <errno.h>
 #include <fcntl.h>
 #include "ioctl_user.h"
@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
     char *ioctl_path = "/dev/char_dev_ioctl";
     int request, arg0, arg1;
-    int fd;
+    int fd,ret;
 
     if (argc < 2)
     {
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     {
         arg0 = strtol(argv[3], NULL, 10);
     }
-    fd = open(ioctl_path, 0_RDONLY);
+    fd = open(ioctl_path, O_RDONLY);
     if (fd == -1)
     {
         perror("open");
@@ -44,8 +44,5 @@ int main(int argc, char **argv)
     default:
         puts("error: unknown request");
         return EXIT_FAILURE;
-
-    default:
-        break;
     }
 }
