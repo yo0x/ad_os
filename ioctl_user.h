@@ -1,1 +1,4 @@
 #define MY_IOCTL_MAGIC 'A'
+#define MY_IOCTL_INC _IOWR(MY_IOCTL_MAGIC, 0, int)
+#define MY_IOCTL_MAXNR 1
+
