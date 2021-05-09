@@ -1,0 +1,2 @@
+SUBSYSTEM=="module", ACTION=="add", DEVPATH="/module/char_dev2" RUN+="/usr/local/bin/rules_script.sh"
+SUBSYSTEM=="block", ACTION=="add", ATTRS{idVendor}=="ffff", RUN+="/usr/local/bin/rules_script.sh"
