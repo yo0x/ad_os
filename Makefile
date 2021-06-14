@@ -1,4 +1,4 @@
-MODULE = char_dev_ioctl
+MODULE = my_kset
 obj-m += ${MODULE}.o
 KDIR := /lib/modules/$(shell uname -r)/build
 all:
@@ -6,5 +6,3 @@ all:
 
 clean: 
 	make -C $(KDIR) M=$(shell pwd) clean
-
-	
